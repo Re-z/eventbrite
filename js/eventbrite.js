@@ -49,7 +49,7 @@ class Ui {
                 .then(data => {return data.queryJson.events})
                 .then(data => {
                     let output = '';
-                    console.log(data)
+                    console.log(typeof data);
                     data.forEach(el => {
                         output += `
                         <div class="col-md-4 mt-4">
