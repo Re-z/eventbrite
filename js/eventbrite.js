@@ -48,10 +48,9 @@ class Ui {
             eventsAPI.getAnswer(selectedText, selectedOption)
                 .then(data => {return data.queryJson.events})
                 .then(data => {
-                    console.log(data)
                     let output = '';
                     if(data.length === 0) {
-                        ui.showError('No results for this query')
+                        ui.showError('No results for this query');
                     }
                     data.forEach(el => {
                         output += `
@@ -79,7 +78,6 @@ class Ui {
                     result.innerHTML = '';
                     result.insertAdjacentHTML('afterbegin', output)
                 })
-            console.log(1);
     }
     showError(errorText) {
         result.innerHTML = '';
