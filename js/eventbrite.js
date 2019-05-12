@@ -48,20 +48,23 @@ class Ui {
             eventsAPI.getAnswer(selectedText, selectedOption)
                 .then(data => {return data.queryJson.events})
                 .then(data => {
+                    console.log(data)
                     let output = '';
-                    console.log(typeof data);
+                    if(data.length === 0) {
+                        ui.showError('No results for this query')
+                    }
                     data.forEach(el => {
                         output += `
                         <div class="col-md-4 mt-4">
                              <div class="card">
                                   <div class="card-body">
-                                       <img class="img-fluid mb-2" src="${el.logo.url !== null ? el.logo.url : ''}"> 
+                                       <img class="img-fluid mb-2" src="${el.logo.url}"> 
                                   </div>
                                   <div class="card-body">
                                        <div class="card-text">
                                             <h2 class="text-center card-title">${el.name.text}</h2>
                                             <p class="lead text-info">Event Information:</p>
-                                            <p>${el.description.text}....</p>
+                                            <p>${el.description.text.substr(0, 100)}....</p>
                                             <span class="badge badge-primary">Location: ${el.start.timezone}</span>
                                             <span class="badge badge-secondary">Date & Time: ${el.start.local}</span>
     
@@ -76,7 +79,16 @@ class Ui {
                     result.innerHTML = '';
                     result.insertAdjacentHTML('afterbegin', output)
                 })
-              
+            console.log(1);
+    }
+    showError(errorText) {
+        let errorBlock = document.querySelector('#error');
+        errorBlock.innerHTML = errorText;
+        errorBlock.style.cssText = 'display: block !important';
+    }
+    hideError() {
+        let errorBlock = document.querySelector('#error');
+        errorBlock.style.cssText = 'display: none !important';
     }
 
 }
@@ -88,6 +100,12 @@ let ui = new Ui();
 let submitBtn = document.getElementById('submitBtn');
 submitBtn.addEventListener('click', function(ev) {
     ev.preventDefault;
-    ui.queryEvent();
-    
+    ui.hideError();
+    let selectedText = document.querySelector('#event-name').value;
+    if(selectedText) {
+        ui.queryEvent();
+    } else {
+        ui.showError('Please, choose a theme or city to search');
+    }
+
 });
