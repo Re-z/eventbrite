@@ -82,6 +82,7 @@ class Ui {
             console.log(1);
     }
     showError(errorText) {
+        result.innerHTML = '';
         let errorBlock = document.querySelector('#error');
         errorBlock.innerHTML = errorText;
         errorBlock.style.cssText = 'display: block !important';
